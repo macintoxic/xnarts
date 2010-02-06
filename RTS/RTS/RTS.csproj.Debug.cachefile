@@ -1,14 +1,14 @@
 Content\Basic_Unit.xnb
 Content\Friendly_Select.xnb
 Content\Enemy_Select.xnb
+Content\HUD\Mouse.xnb
 Content\Select.xnb
 Content\Keys\UpKey.xnb
 Content\Keys\DownKey.xnb
 Content\Keys\ShiftKey.xnb
 Content\Keys\CtrlKey.xnb
 Content\Keys\SpaceKey.xnb
-Content\HUD\Mouse.xnb
 Content\HUD\HUDBack.xnb
 Content\HUD\HUDBack2.xnb
-Content\Fonts\font1.xnb
 Content\HUD\Basic_Avatar.xnb
+Content\Fonts\font1.xnb

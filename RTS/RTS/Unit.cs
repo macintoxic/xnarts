@@ -48,9 +48,9 @@ namespace RTS
         public Unit(StratGame game)
         {
             gameRef = game;
-            image = gameRef.unitImage;
-            avatar = gameRef.unitAvatar;
-            attack = gameRef.unitAttack;
+            image = gameRef.textures.unit_default_image;
+            avatar = gameRef.textures.unit_default_avatar;
+            attack = gameRef.textures.unit_default_attack;
             health = 10;
             max_health = 10;
             power = 3;
@@ -72,11 +72,11 @@ namespace RTS
                     int hp, int pow, int spd, int rng, Boolean enem, Vector2 loc)
         {
             gameRef = game;
-            if (img == null) image = gameRef.unitImage;
+            if (img == null) image = gameRef.textures.unit_default_image;
             else image = img;
-            if (avt == null) avatar = gameRef.unitAvatar;
+            if (avt == null) avatar = gameRef.textures.unit_default_avatar;
             else avatar = avt;
-            if (atk == null) attack = gameRef.unitAttack;
+            if (atk == null) attack = gameRef.textures.unit_default_attack;
             else attack = atk;
             if (hp == Program.NaN) max_health = 10;
             else max_health = hp;
