@@ -124,9 +124,9 @@ namespace RTS
         private Boolean move() {
             if (destination.X == Program.NaN || destination.Y == Program.NaN)
                 return false;
-            Boolean movedX = true;
-            Boolean movedY = true;
-            if (destination.X < location.X && destination.X + speed < location.X)
+            //Boolean movedX = true;
+            //Boolean movedY = true;
+            /*if (destination.X < location.X && destination.X + speed < location.X)
                 location.X -= speed;
             else if (destination.X > location.X && destination.X - speed > location.X)
                 location.X += speed;
@@ -137,13 +137,22 @@ namespace RTS
             else if (destination.Y > location.Y && destination.Y - speed > location.Y)
                 location.Y += speed;
             else
-                movedY = false;
-            //location = Vector2.Lerp(location, destination, //0.05f
-            //    (float)speed / (float)Vector2.Distance(location, destination));
-            if (!movedX && !movedY)
+                movedY = false; */
+            if (Vector2.Distance(location, destination) <= speed)
+                destination = new Vector2(Program.NaN, Program.NaN);
+            else
+            {
+                location = Vector2.Lerp(location, destination, //0.05f
+                    (float)speed / (float)Vector2.Distance(location, destination));
+                return true;
+            }
+
+            return false;
+
+            /*if (!movedX && !movedY)
                 destination = new Vector2(Program.NaN, Program.NaN);
 
-            return (movedX || movedY);
+            return (movedX || movedY);*/
         }
 
         // Method for this Unit to attack another.

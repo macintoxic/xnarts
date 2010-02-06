@@ -55,20 +55,20 @@ namespace RTS
 
         public void LoadContent(ContentManager Content)
         {
-            unit_default_image = Content.Load<Texture2D>("Basic_Unit");
-            unit_default_avatar = Content.Load<Texture2D>("HUD/Basic_Avatar");
-            blankBoxSmall = Content.Load<Texture2D>("Select");
-            keys_up = Content.Load<Texture2D>("Keys/UpKey");
-            keys_down = Content.Load<Texture2D>("Keys/DownKey");
-            keys_shift = Content.Load<Texture2D>("Keys/ShiftKey");
-            keys_ctrl = Content.Load<Texture2D>("Keys/CtrlKey");
-            keys_space = Content.Load<Texture2D>("Keys/SpaceKey");
-            HUD_background = Content.Load<Texture2D>("HUD/HUDBack");
-            HUD_line = Content.Load<Texture2D>("HUD/HUDBack2");
-            HUD_friendlySelect = Content.Load<Texture2D>("Friendly_Select");
-            HUD_enemySelect = Content.Load<Texture2D>("Enemy_Select");
-            mouse = Content.Load<Texture2D>("HUD/Mouse");
-            blankBoxSmall = Content.Load<Texture2D>("Select");
+            unit_default_image      = Content.Load<Texture2D>("Basic_Unit");
+            unit_default_avatar     = Content.Load<Texture2D>("HUD/Basic_Avatar");
+            blankBoxSmall           = Content.Load<Texture2D>("Select");
+            keys_up                 = Content.Load<Texture2D>("Keys/UpKey");
+            keys_down               = Content.Load<Texture2D>("Keys/DownKey");
+            keys_shift              = Content.Load<Texture2D>("Keys/ShiftKey");
+            keys_ctrl               = Content.Load<Texture2D>("Keys/CtrlKey");
+            keys_space              = Content.Load<Texture2D>("Keys/SpaceKey");
+            HUD_background          = Content.Load<Texture2D>("HUD/HUDBack");
+            HUD_line                = Content.Load<Texture2D>("HUD/HUDBack2");
+            HUD_friendlySelect      = Content.Load<Texture2D>("Friendly_Select");
+            HUD_enemySelect         = Content.Load<Texture2D>("Enemy_Select");
+            mouse                   = Content.Load<Texture2D>("HUD/Mouse");
+            blankBoxSmall           = Content.Load<Texture2D>("Select");
         }
     }
 }

@@ -43,16 +43,13 @@ namespace RTS
         {
             graphics = new GraphicsDeviceManager(this);
             textures = new TextureManager();
-            mouse = new MouseManager(this);
-            drawer = new Drawer(this);
-            hud = new HUD(this);
             Content.RootDirectory = "Content";
             
             //Program.SCREENWIDTH = Window.ClientBounds.Width;
             //Program.SCREENHEIGHT = Window.ClientBounds.Height;
             graphics.PreferredBackBufferWidth = Program.SCREENWIDTH;
             graphics.PreferredBackBufferHeight = Program.SCREENHEIGHT;
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             splashScreen = true;
             //content = new ContentManager(Services);
             //Window.AllowUserResizing = true;
@@ -115,11 +112,11 @@ namespace RTS
                 return;
             }
 
+            mouse.Update(gameTime, mstate, kstate);
+
             if (!pause && kstate.IsKeyDown(Keys.P)) pause = true;
             if (pause && kstate.IsKeyDown(Keys.Enter)) { pause = false; return; }
             if (pause || gameOver()) return;
-
-            mouse.Update(gameTime, mstate, kstate);
 
             // Space selects all friendly units
             if (kstate.IsKeyDown(Keys.Space))
@@ -239,6 +236,10 @@ namespace RTS
             selected = new List<Unit>();
             friendly = new List<Unit>();
             enemy = new List<Unit>();
+
+            mouse = new MouseManager(this);
+            drawer = new Drawer(this);
+            hud = new HUD(this);
 
             for (int i = 50; i <= 400; i += 50)
             {
