@@ -151,26 +151,31 @@ namespace RTS
                 {
                     selectedUnit.AIon = false;
                     if (selectedUnit.dead) continue;
-                    if (target != null)
+                    if (kstate.IsKeyDown(Keys.LeftShift) || kstate.IsKeyDown(Keys.RightShift))
                     {
-                        if (kstate.IsKeyDown(Keys.LeftShift) || kstate.IsKeyDown(Keys.RightShift))
+                        if (target == null)
                         {
-                            if (selectedUnit.currentTarget == null)
-                                selectedUnit.currentTarget = target;
-                            else
-                                selectedUnit.targetQueue.Enqueue(target);
+                            if (selectedUnit.destination.X == Program.NaN)
+                            {
+                                selectedUnit.destination.X = mouseX;
+                                selectedUnit.destination.Y = mouseY;
+                            }
+                            else selectedUnit.targetQueue.Enqueue(new Coordinate(mouseX, mouseY));
                         }
-                        else
-                        {
-                            selectedUnit.targetQueue.Clear();
+                        else if (selectedUnit.currentTarget == null && selectedUnit.destination.X == Program.NaN)
                             selectedUnit.currentTarget = target;
-                        }
+                        else
+                            selectedUnit.targetQueue.Enqueue(target);
                     }
                     else
                     {
                         selectedUnit.targetQueue.Clear();
-                        selectedUnit.currentTarget = null;
-                        selectedUnit.destination = new Vector2(mouseX, mouseY);
+                        selectedUnit.currentTarget = target;
+                        if (target == null)
+                        {
+                            selectedUnit.destination.X = mouseX;
+                            selectedUnit.destination.Y = mouseY;
+                        }
                     }
                 }
             }

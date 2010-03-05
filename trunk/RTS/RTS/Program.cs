@@ -7,8 +7,8 @@ namespace RTS
         public static int NaN = -99999;     // Used througout project to indicate unitialized 
                                             // or otherwise unique values.
 
-        public static int SCREENWIDTH = /*800; // */ 1280;
-        public static int SCREENHEIGHT = /*600; // */ 800;
+        public static int SCREENWIDTH  = 800; // */ 1280;
+        public static int SCREENHEIGHT = 600; // */ 800;
         public static int HUDHEIGHT = 165;
 
         /// <summary>
