@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace RTS
 {
-    public class Unit
+    public class Unit : Queueable
     {
 
         /*************** Unit Fields ******************************/
@@ -23,7 +23,7 @@ namespace RTS
         public Texture2D avatar;
         public Texture2D attack;
         public Unit currentTarget;
-        public Queue<Unit> targetQueue;
+        public Queue<Queueable> targetQueue;
 
         private int max_health;
         private int health;     // Amount of damage unit can take before being destroyed
@@ -38,7 +38,7 @@ namespace RTS
         public Boolean AIon;
         public Boolean enemy;
         public Boolean dead;
-        public Vector2 location;
+        public Vector2 location { get; set; }
         public Vector2 destination;
 
 
@@ -62,7 +62,7 @@ namespace RTS
             dead = false;
             location = new Vector2(5, 5);
             destination = new Vector2(Program.NaN, Program.NaN);
-            targetQueue = new Queue<Unit>(15);
+            targetQueue = new Queue<Queueable>(15);
         }
 
         // More capable constructor, which allows for the setting of custom field values.
@@ -94,7 +94,7 @@ namespace RTS
             dead = false;
             currentTarget = null;
             destination = new Vector2(Program.NaN, Program.NaN);
-            targetQueue = new Queue<Unit>();
+            targetQueue = new Queue<Queueable>();
         }
 
 
@@ -139,7 +139,10 @@ namespace RTS
             else
                 movedY = false; */
             if (Vector2.Distance(location, destination) <= speed)
-                destination = new Vector2(Program.NaN, Program.NaN);
+            {
+                if(currentTarget != null) return true;
+                updateTargetQueue();
+            }
             else
             {
                 location = Vector2.Lerp(location, destination, //0.05f
@@ -162,21 +165,7 @@ namespace RTS
             Boolean kill = currentTarget.hit(power);
             if (kill)
             {
-                if (targetQueue.Count > 0)
-                {
-                    while (targetQueue.Count > 0 && (currentTarget == null || currentTarget.dead))
-                    {
-                        currentTarget = targetQueue.Dequeue();
-                        destination.X = currentTarget.location.X;
-                        destination.Y = currentTarget.location.Y;
-                    }
-                }
-                else
-                {
-                    currentTarget = null;
-                    destination.X = Program.NaN;
-                    destination.Y = Program.NaN;
-                }
+                updateTargetQueue();
             }
             action_count_down = ACTION_TIME;
         }
@@ -236,22 +225,38 @@ namespace RTS
         private void updateDestination()
         {
             if (currentTarget == null) return;
-            while (currentTarget.dead)
+            while (currentTarget != null && currentTarget.dead)
             {
-                if (targetQueue.Count > 0)
-                    currentTarget = targetQueue.Dequeue();
-                else
-                {
-                    currentTarget = null;
-                    destination.X = Program.NaN;
-                    destination.Y = Program.NaN;
-                    break;
-                }
+                updateTargetQueue();
             }
             if(currentTarget != null) 
             {
                 destination.X = currentTarget.location.X;
                 destination.Y = currentTarget.location.Y;
+            }
+        }
+
+        private void updateTargetQueue()
+        {
+            currentTarget = null;
+            destination.X = Program.NaN;
+            destination.Y = Program.NaN;
+            if (targetQueue.Count > 0)
+            {
+                while (targetQueue.Count > 0 && (currentTarget == null || currentTarget.dead))
+                {
+                    Queueable next = targetQueue.Dequeue();
+                    destination.X = next.location.X;
+                    destination.Y = next.location.Y;
+                    if (next is Unit) currentTarget = (Unit)next;
+                    else { currentTarget = null; break; }
+                }
+            }
+            if (currentTarget != null && currentTarget.dead)
+            {
+                currentTarget = null;
+                destination.X = Program.NaN;
+                destination.Y = Program.NaN;
             }
         }
 

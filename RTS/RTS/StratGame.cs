@@ -34,8 +34,8 @@ namespace RTS
         public List<Unit> enemy;
         public List<Unit> selected;
 
-        private Boolean pause;
-        private Boolean splashScreen;
+        private bool pause;
+        private bool splashScreen;
 
 
 
@@ -43,13 +43,14 @@ namespace RTS
         {
             graphics = new GraphicsDeviceManager(this);
             textures = new TextureManager();
+            hud = new HUD(this);
             Content.RootDirectory = "Content";
             
             //Program.SCREENWIDTH = Window.ClientBounds.Width;
             //Program.SCREENHEIGHT = Window.ClientBounds.Height;
             graphics.PreferredBackBufferWidth = Program.SCREENWIDTH;
             graphics.PreferredBackBufferHeight = Program.SCREENHEIGHT;
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
             splashScreen = true;
             //content = new ContentManager(Services);
             //Window.AllowUserResizing = true;
@@ -108,7 +109,7 @@ namespace RTS
 
             if (splashScreen)
             {
-                updateSplashScreen(kstate);
+                splashScreen = hud.updateSplashScreen(kstate);
                 return;
             }
 
@@ -147,7 +148,7 @@ namespace RTS
 
             if (splashScreen)
             {
-                drawSplashScreen();
+                hud.drawSplashScreen(spriteBatch);
                 spriteBatch.End();
                 return;
             }
@@ -215,22 +216,7 @@ namespace RTS
 
         /********* Splash Screen and Initializer Helpers ********************************/
 
-        private void updateSplashScreen(KeyboardState kstate)
-        {
-            if (kstate.IsKeyDown(Keys.Enter))
-            {
-                splashScreen = false;
-                postSplashInitialize();
-            }
-        }
-
-        private void drawSplashScreen()
-        {
-            spriteBatch.DrawString(font, "Press 'Enter' to start...", 
-                new Vector2(Program.SCREENWIDTH / 2, Program.SCREENHEIGHT / 2), Color.White);
-        }
-
-        private void postSplashInitialize()
+        public void postSplashInitialize()
         {
             units = new List<Unit>();
             selected = new List<Unit>();
@@ -239,7 +225,6 @@ namespace RTS
 
             mouse = new MouseManager(this);
             drawer = new Drawer(this);
-            hud = new HUD(this);
 
             for (int i = 50; i <= 400; i += 50)
             {

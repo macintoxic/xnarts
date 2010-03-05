@@ -66,6 +66,23 @@ namespace RTS
                 new Vector2(129, Program.SCREENHEIGHT - 38), Color.Black);
         }
 
+        public void drawSplashScreen(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(game.font, "Press 'Enter' to start...",
+                new Vector2(Program.SCREENWIDTH / 2, Program.SCREENHEIGHT / 2), Color.White);
+        }
+
+        // Post: Returns false if the splash screen is done
+        public bool updateSplashScreen(KeyboardState kstate)
+        {
+            if (kstate.IsKeyDown(Keys.Enter))
+            {
+                game.postSplashInitialize();
+                return false;
+            }
+            return true;
+        }
+
         private void drawSelectedAvatars(SpriteBatch spriteBatch)
         {
             int x = 263;
