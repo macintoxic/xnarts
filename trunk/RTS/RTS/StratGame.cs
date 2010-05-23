@@ -194,6 +194,7 @@ namespace RTS
                 {
                     unit.AIon = false;
                     unit.currentTarget = null;
+                    unit.targetQueue.Clear();
                     unit.destination = new Vector2(Program.NaN, Program.NaN);
                 }
             }
