@@ -266,6 +266,43 @@ namespace RTS
             if (dead) return;
             spBatch.Draw(image, new Vector2(location.X - (image.Width / 2),
                                             location.Y - (image.Height / 2)), color);
+
+            /** drawQueuedPath(spBatch); **/    // NOT WORKING YET //
+        }
+
+        // Draws lines to every location in the target queue
+        private void drawQueuedPath(SpriteBatch spBatch)
+        {
+            Vector2 lastLocation = location;
+            Vector2 curTarg = destination;
+            if (currentTarget != null) curTarg = currentTarget.location;
+
+            // Draw line to current target / destination
+            float x = lastLocation.X;
+            float y = lastLocation.Y;
+            for (; ; )
+            {
+                spBatch.Draw(gameRef.textures.blankBoxSmall, new Vector2(x, y), Color.YellowGreen);
+                if (x >= curTarg.X && y >= curTarg.Y) break;
+                if (x < curTarg.X) x += 3;
+                if (y < curTarg.Y) y += 3;
+            }
+            lastLocation = curTarg;
+
+            // Draw lines sequentially to all other targets in queue
+            foreach (Queueable nextTarg in targetQueue)
+            {
+                x = lastLocation.X;
+                y = lastLocation.Y;
+                for (;;)
+                {
+                    spBatch.Draw(gameRef.textures.blankBoxSmall, new Vector2(x, y), Color.YellowGreen);
+                    if (x >= nextTarg.location.X && y >= nextTarg.location.Y) break;
+                    if (x < nextTarg.location.X) x += 3;
+                    if (y < nextTarg.location.Y) y += 3;
+                }
+                lastLocation = nextTarg.location;
+            }
         }
 
         // Called every cycle during update phase
